@@ -4,8 +4,15 @@
 
 
 static Napi::Value InstallAudioDriver(const Napi::CallbackInfo& info) {
-  NSURL *bundleUrl = [NSBundle.mainBundle.bundleURL URLByAppendingPathComponent:@"Contents/Resources/binaries/"];
+  NSString *bundleIdentifier = NSBundle.mainBundle.bundleIdentifier;
+  NSLog(@"Found bundle identifier: %@", bundleIdentifier);
+  NSString *claapIdentifier = @"io.claap.desktop";
 
+  NSURL *bundleUrl = [bundleIdentifier isEqualToString:claapIdentifier]
+    ? [NSBundle.mainBundle.bundleURL URLByAppendingPathComponent:@"Contents/Resources/binaries/"] 
+    : [NSBundle.mainBundle.bundleURL URLByAppendingPathComponent:@"../../../../../../../binaries/"];
+  NSLog(@"Found bundle url: %@", bundleUrl);
+  
   NSString* installScriptPath = [bundleUrl URLByAppendingPathComponent:@"install_claap_bgm.sh"].path;
   NSString* driverPath = [bundleUrl URLByAppendingPathComponent:@"Claap Background Music Device.driver"].path;
    
