@@ -33,7 +33,7 @@ static Napi::Value InstallAudioDriver(const Napi::CallbackInfo& info) {
   return info.Env().Undefined();
 }
 
-static Napi::Value CheckAudioDriverInstallation(const Napi::CallbackInfo& info) {
+static Napi::Value checkAudioDriverInstalled(const Napi::CallbackInfo& info) {
   NSString *bundleIdentifier = NSBundle.mainBundle.bundleIdentifier;
   NSLog(@"Found bundle identifier: %@", bundleIdentifier);
   NSString *claapIdentifier = @"io.claap.desktop";
@@ -65,7 +65,7 @@ static Napi::Value CheckAudioDriverInstallation(const Napi::CallbackInfo& info) 
 
 static Napi::Object Init(Napi::Env env, Napi::Object exports) {
   exports["installAudioDriver"] = Napi::Function::New(env, InstallAudioDriver);
-  exports["checkAudioDriverInstalled"] = Napi::Function::New(env, CheckAudioDriverInstallation);
+  exports["checkAudioDriverInstalled"] = Napi::Function::New(env, checkAudioDriverInstalled);
   return exports;
 }
 

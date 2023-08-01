@@ -1,6 +1,6 @@
 export interface AudioDriverInstaller {
     installAudioDriver: () => boolean;
-    checkAudioDriverInstallation: () => boolean;
+    checkAudioDriverInstalled: () => boolean;
 }
 const AudioDriverInstaller: AudioDriverInstaller = require('bindings')('AudioDriverInstaller');
 
