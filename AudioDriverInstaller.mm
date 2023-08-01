@@ -44,9 +44,9 @@ static Napi::Value checkAudioDriverInstalled(const Napi::CallbackInfo& info) {
   NSLog(@"Found bundle url: %@", bundleUrl);
   
   NSString* checkScriptPath = [bundleUrl URLByAppendingPathComponent:@"check_claap_bgm.sh"].path;
-  NSString* driverPath = [bundleUrl URLByAppendingPathComponent:@"Claap Background Music Device.driver"].path;
+  NSString* driverName = @"Claap Background Music Device.driver";
    
-  NSString *source = [NSString stringWithFormat:@"do shell script \"\'%@\' \'%@\'\"", checkScriptPath, driverPath];
+  NSString *source = [NSString stringWithFormat:@"do shell script \"\'%@\' \'%@\'\"", checkScriptPath, driverName];
   NSAppleScript *script = [[NSAppleScript alloc] initWithSource:source];
     
   NSDictionary *error;
