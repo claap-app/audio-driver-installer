@@ -33,6 +33,36 @@ static Napi::Value InstallAudioDriver(const Napi::CallbackInfo& info) {
   return info.Env().Undefined();
 }
 
+static Napi::Value checkLegacyAudioDriverInstalled(const Napi::CallbackInfo& info) {
+  NSString *bundleIdentifier = NSBundle.mainBundle.bundleIdentifier;
+  NSLog(@"Found bundle identifier: %@", bundleIdentifier);
+  NSString *claapIdentifier = @"io.claap.desktop";
+
+  NSURL *bundleUrl = [bundleIdentifier isEqualToString:claapIdentifier]
+    ? [NSBundle.mainBundle.bundleURL URLByAppendingPathComponent:@"Contents/Resources/binaries/"] 
+    : [NSBundle.mainBundle.bundleURL URLByAppendingPathComponent:@"../../../../../../../binaries/"];
+  NSLog(@"Found bundle url: %@", bundleUrl);
+  
+  NSString* checkScriptPath = [bundleUrl URLByAppendingPathComponent:@"check_claap_audio_driver.sh"].path;
+  NSString* driverName = @"Claap Background Music Device.driver";
+   
+  NSString *source = [NSString stringWithFormat:@"do shell script \"\'%@\' \'%@\'\"", checkScriptPath, driverName];
+  NSAppleScript *script = [[NSAppleScript alloc] initWithSource:source];
+    
+  NSDictionary *error;
+  NSAppleEventDescriptor *desc = [script executeAndReturnError:&error];
+    
+  if (desc) {
+    NSLog(@"Check successful: %@", desc);
+    return Napi::Boolean::New(info.Env(), true);
+  } else {
+    NSLog(@"Check failed! %@", error);
+    return Napi::Boolean::New(info.Env(), false);
+  }
+
+  return info.Env().Undefined();
+}
+
 static Napi::Value checkAudioDriverInstalled(const Napi::CallbackInfo& info) {
   NSString *bundleIdentifier = NSBundle.mainBundle.bundleIdentifier;
   NSLog(@"Found bundle identifier: %@", bundleIdentifier);
