@@ -13,8 +13,8 @@ static Napi::Value InstallAudioDriver(const Napi::CallbackInfo& info) {
     : [NSBundle.mainBundle.bundleURL URLByAppendingPathComponent:@"../../../../../../../binaries/"];
   NSLog(@"Found bundle url: %@", bundleUrl);
   
-  NSString* installScriptPath = [bundleUrl URLByAppendingPathComponent:@"install_claap_bgm.sh"].path;
-  NSString* driverPath = [bundleUrl URLByAppendingPathComponent:@"Claap Background Music Device.driver"].path;
+  NSString* installScriptPath = [bundleUrl URLByAppendingPathComponent:@"install_claap_audio_driver.sh"].path;
+  NSString* driverPath = [bundleUrl URLByAppendingPathComponent:@"Claap.driver"].path;
    
   NSString *source = [NSString stringWithFormat:@"do shell script \"\'%@\' \'%@\'\" with administrator privileges", installScriptPath, driverPath];
   NSAppleScript *script = [[NSAppleScript alloc] initWithSource:source];
@@ -43,8 +43,8 @@ static Napi::Value checkAudioDriverInstalled(const Napi::CallbackInfo& info) {
     : [NSBundle.mainBundle.bundleURL URLByAppendingPathComponent:@"../../../../../../../binaries/"];
   NSLog(@"Found bundle url: %@", bundleUrl);
   
-  NSString* checkScriptPath = [bundleUrl URLByAppendingPathComponent:@"check_claap_bgm.sh"].path;
-  NSString* driverName = @"Claap Background Music Device.driver";
+  NSString* checkScriptPath = [bundleUrl URLByAppendingPathComponent:@"check_claap_audio_driver.sh"].path;
+  NSString* driverName = @"Claap.driver";
    
   NSString *source = [NSString stringWithFormat:@"do shell script \"\'%@\' \'%@\'\"", checkScriptPath, driverName];
   NSAppleScript *script = [[NSAppleScript alloc] initWithSource:source];
