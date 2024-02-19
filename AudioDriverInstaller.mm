@@ -96,6 +96,7 @@ static Napi::Value checkAudioDriverInstalled(const Napi::CallbackInfo& info) {
 static Napi::Object Init(Napi::Env env, Napi::Object exports) {
   exports["installAudioDriver"] = Napi::Function::New(env, InstallAudioDriver);
   exports["checkAudioDriverInstalled"] = Napi::Function::New(env, checkAudioDriverInstalled);
+  exports["checkLegacyAudioDriverInstalled"] = Napi::Function::New(env, checkLegacyAudioDriverInstalled);
   return exports;
 }
 
